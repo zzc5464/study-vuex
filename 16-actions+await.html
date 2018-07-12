@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+  <title>Document</title>
+</head>
+
+<body>
+  <script src='./node_modules/vue/dist/vue.min.js'></script>
+  <script src='./node_modules/vuex/dist/vuex.min.js'></script>
+  <script>
+    function asyncGetNum() {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(1)
+        }, 1000);
+      })
+    }
+    const store = new Vuex.Store({
+      state: {
+        num: 1,
+      },
+      mutations: {
+        add: state => {
+          state.num++;
+        }
+      },
+      actions: {
+        async Add({ state, commit }) {
+          await asyncGetNum()
+        },
+        async addB({ dispatch, commit, state }) {
+          await dispatch('add');
+          console.log(state.num);
+        }
+      }
+    })
+    store.dispatch('addB');
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <button @click='add'>+</button>
+    <span>{{$store.state.number}}</span>
+    <button @click='des'>-</button>
+  </div>
+  <script src='./node_modules/vue/dist/vue.min.js'></script>
+  <script src='./node_modules/vuex/dist/vuex.min.js'></script>
+  <script>
+    const store = new Vuex.Store({
+      state: {
+        number: 0,
+      },
+      mutations: {
+        plus(state) {
+          state.number++;
+        },
+        des(state) {
+          state.number--;
+        },
+      }
+    });
+    const vm = new Vue({
+      el: '#app',
+      store,
+      methods: {
+        add() {
+          this.$store.commit('plus')
+        },
+        des() {
+          this.$store.commit('des')
+        },
+      },
+    });
+  </script>
+</body>
+
+</html>

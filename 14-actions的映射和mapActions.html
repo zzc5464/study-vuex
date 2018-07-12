@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+     <brother></brother>
+    <button @click='add'>添加</button>
+  </div>
+  <script src='./node_modules/vue/dist/vue.min.js'></script>
+  <script src='./node_modules/vuex/dist/vuex.min.js'></script>
+  <script>
+    const mapActions = Vuex.mapActions;
+    Vue.component('brother', {
+      template : `<div>{{$store.state.num}}</div>`,
+    });
+    const store = new Vuex.Store({
+      state : {
+        num : 1,
+      },
+      mutations : {
+        add :state=> {
+          state.num ++ ;
+        }
+      },
+      actions : {
+        add : ({commit}) =>{
+          setTimeout(_=>{
+            commit('add');
+          },1000)
+        }
+      }
+    });
+    const vm = new Vue({
+      el : '#app',
+      store,
+      methods : {
+        ...mapActions(['add']),
+      }
+    });
+  </script>
+</body>
+
+</html>

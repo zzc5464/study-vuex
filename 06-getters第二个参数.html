@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+
+  </div>
+  <script src='./node_modules/vue/dist/vue.min.js'></script>
+  <script src='./node_modules/vuex/dist/vuex.min.js'></script>
+  <script>
+    const store = new Vuex.Store({
+      state:{
+        arr : [0,1,2,3],
+      },
+      getters : {
+        one : state=> {
+          return state.arr[1];
+        },
+        /*
+          第二个参数，就是将getter对象传进来。
+          通过一个计算属性调用另一个计算属性。
+        */
+        getIndex : (state,getters) =>{
+          return state.arr[getters.one];
+        }
+      }
+    });
+    const vm = new Vue({
+      el:'#app',
+      store,
+      created() {
+        console.log(this.$store.getters.getIndex); // 1
+      },
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+  <title>Document</title>
+</head>
+<body>
+  <script src='./node_modules/vue/dist/vue.min.js'></script>
+  <script src='./node_modules/vuex/dist/vuex.min.js'></script>
+  <script>
+    const mA = {
+      state : {
+        a : 1,
+        b : 1,
+      },
+      // 模块的局部 mutations
+      mutations : {
+        add : state =>{
+          state.a++
+        },
+      },
+      getters : {
+        double : state=> {
+          return state.a *2
+        }
+      }
+    }
+    const mB = {
+      state : {
+        a : 2,
+        b : 2,
+      },
+      // 模块的局部 mutations
+      mutations: {
+        addB: state => {
+          state.a++
+        },
+      },
+      // 模块的局部 actions
+      actions : {
+        asyncAdd : ({commit, rootState ,state}) =>{
+          setTimeout(() => {
+            commit('addB');
+          }, 1000);
+        }
+      }
+    }
+    const store = new Vuex.Store({
+      modules : {
+        a : mA,
+        b : mB,
+      }
+    });
+    console.log(store.state.a);
+    // {
+    //   a : 1,
+    //   b : 1,
+    // }
+    // {
+    //   a : 2,
+    //   b : 2,
+    // }
+    console.log(store.a);
+    
+    // store.state.commit('addB');
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <span>{{$store.state.number}}</span>
+    <button @click='add'>映射添加</button>
+    <span>{{outerNum}}</span>
+    <button @click='plus'>本身添加</button>
+  </div>
+  <script src='./node_modules/vue/dist/vue.min.js'></script>
+  <script src='./node_modules/vuex/dist/vuex.min.js'></script>
+  <script>
+    const mapMutations = Vuex.mapMutations;
+    const store = new Vuex.Store({
+      state :{
+        number : 1,
+      },
+      mutations : {
+        add : state =>{
+          state.number ++;
+        }
+      }
+    });
+    const vm = new Vue({
+      el : '#app',
+      store,
+      data : {
+        outerNum : 1,
+      },
+      methods : {
+        plus(){
+          this.outerNum ++;
+        },
+        ...mapMutations(['add']),
+      }
+    });
+
+    
+  </script>
+</body>
+
+</html>

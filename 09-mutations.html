@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+  <title>Document</title>
+</head>
+<body>
+  <script src='./node_modules/vue/dist/vue.min.js'></script>
+  <script src='./node_modules/vuex/dist/vuex.min.js'></script>
+  <script>
+    const store = new Vuex.Store({
+      state:{
+        num : 0,
+      },
+      mutations : {
+        add : state=>{
+          state.num ++;
+        },
+        // 荷载
+        addthree : (state,options) => {
+          return state.num += options.num
+        }
+      }
+    });
+    // store.commit('add');
+    // store.commit('addthree',{
+    //   num : 3,
+    // });
+    store.commit({
+      type : 'addthree',
+      num : 3
+    });
+    console.log(store.state.num); // 3
+    
+  </script>
+</body>
+
+</html>

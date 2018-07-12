@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+  <title>Document</title>
+</head>
+
+<body>
+  <script src='./node_modules/vue/dist/vue.min.js'></script>
+  <script src='./node_modules/vuex/dist/vuex.min.js'></script>
+  <script>
+    const store = new Vuex.Store({
+      state: {
+        num: 1,
+      },
+      mutations: {
+        add: state => {
+          state.num++;
+        }
+      },
+      actions: {
+        // 使用promise得到异步调用的结果
+        add: ({ commit, state }) => {
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              commit('add');
+              resolve(state.num);
+            }, 1000);
+          })
+        },
+        // 在一个actions中调用另一个actions
+        addB: ({ dispatch, commit }) => {
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              dispatch('add').then(num => {
+                commit('add');
+                resolve();
+              });
+            }, 1000);
+          })
+        }
+      }
+    });
+    // 使用promise得到异步调用的结果
+    store.dispatch('add').then(num => {
+      console.log('执行完成num = ' + num);
+    });
+    // 在一个actions中调用另一个actions
+    store.dispatch('addB').then(_=>{
+      console.log('执行完毕B');
+      
+    });
+  </script>
+</body>
+
+</html>

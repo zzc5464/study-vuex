@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+  <title>Document</title>
+</head>
+<body>
+  <script src='./node_modules/vue/dist/vue.min.js'></script>
+  <script src='./node_modules/vuex/dist/vuex.min.js'></script>
+  <script>
+    const mapGetters = Vuex.mapGetters;
+    const store = new Vuex.Store({
+      state:{
+        arr : [1,2,3,4],
+      },
+      getters:{
+        arrStr : state=>{
+          return state.arr.join('变');
+        }
+      }
+    });
+    const vm = new Vue({
+      store, // 数组写法一定要挂载
+      computed:{
+        ...mapGetters([
+          /*
+          相当于写了arrStr = this.$store.getters.arrStr
+          */ 
+          'arrStr', 
+        ])
+      },
+      created() {
+        console.log(this.arrStr);
+      },
+    });
+  </script>
+</body>
+
+</html>

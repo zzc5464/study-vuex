@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <!-- {{number}}
+    {{count}}
+    {{locationCount}} -->
+    {{getNum}}
+    {{num}}
+  </div>
+  <script src='./node_modules/vue/dist/vue.min.js'></script>
+  <script src='./node_modules/vuex/dist/vuex.min.js'></script>
+  <script>
+    const mapState = Vuex.mapState;
+    const store = new Vuex.Store({
+      state: {
+        num: 1,
+        count : 10,
+      }
+    });
+    const vm = new Vue({
+      el: '#app',
+      store,
+      data:{
+        locationData:11,
+      },
+      // 写法1
+      // computed: mapState([
+      //   'num'
+      // ]),
+      // 写法2
+      // computed:mapState({
+      //   number : state => state.num,
+      //   count : 'count',
+      //   locationCount(state){ // 要与vue实例的数据进行计算的时候写法，不可以写箭头函数
+      //     return state.count + this.locationData;
+      //   },
+      // }),
+      // 写法3 混入 
+      computed:{
+        getNum(){
+          return this.locationData
+        },
+        ...mapState([
+          'num'
+        ])
+      },
+    });
+  </script>
+</body>
+
+</html>

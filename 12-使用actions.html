@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+  <title>Document</title>
+</head>
+
+<body>
+  <script src='./node_modules/vue/dist/vue.min.js'></script>
+  <script src='./node_modules/vuex/dist/vuex.min.js'></script>
+  <script>
+    const store = new Vuex.Store({
+      state: {
+        num: 1,
+      },
+      mutations: {
+        add(state) {
+          state.num++;
+        },
+        asyncAdd(state) {
+          state.num++;
+          console.log(state.num);
+          
+        },
+      },
+      actions: {
+        add(context) {
+          context.commit('add');
+        },
+        asyncAdd({ commit }) {
+          setTimeout(_ => {
+            commit('asyncAdd');
+          },1000);
+        },
+      }
+    });
+    // 调用
+    store.dispatch('add');
+    store.dispatch('asyncAdd');
+    console.log(store.state.num);
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <son1></son1>
+    <son2></son2>
+  </div>
+  <script src='./node_modules/vue/dist/vue.min.js'></script>
+  <script src='./node_modules/vuex/dist/vuex.min.js'></script>
+  <script>
+    // 通过 $store.getters.方法名调用
+    Vue.component('son1', {
+      template: `<div>{{$store.getters.getLen}}</div>`,
+    });
+    Vue.component('son2', {
+      template: `<div>{{$store.getters.getLen}}</div>`,
+    });
+    const store = new Vuex.Store({
+      state: {
+        arr: [1, 2, 3],
+      },
+      getters: {
+        getLen: state => {
+          return state.arr.length;
+        }
+      }
+    });
+    const vm = new Vue({
+      el:'#app',
+      store,
+    })
+  </script>
+</body>
+
+</html>

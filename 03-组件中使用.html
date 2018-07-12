@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+     <father></father>
+     <son></son>
+     <button @click='add'>reserve</button>
+  </div>
+  <script src='./node_modules/vue/dist/vue.min.js'></script>
+  <script src='./node_modules/vuex/dist/vuex.min.js'></script>
+  <script>
+    Vue.component('father',{
+      template:`<div>{{$store.state.number}}</div>`
+    });
+    Vue.component('son',{
+      template:`<div>{{$store.state.number}}</div>`
+    });
+    const store = new Vuex.Store({
+      state:{
+        number:0,
+      },
+      mutations:{
+        add(state){
+          state.number ++;
+        }
+      }
+    });
+    const vm = new Vue({
+      el:'#app',
+      store,
+      data:{},
+      methods:{
+        add(){
+          return this.$store.commit('add')
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

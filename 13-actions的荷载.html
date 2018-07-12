@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+  <title>Document</title>
+</head>
+<body>
+  <script src='./node_modules/vue/dist/vue.min.js'></script>
+  <script src='./node_modules/vuex/dist/vuex.min.js'></script>
+  <script>
+    const store = new Vuex.Store({
+      state : {
+        num : 0,
+      },
+      mutations : {
+        add : state=>{
+          state.num ++;
+        },
+      },
+      actions : {
+        add : (context,options) =>{
+          setTimeout(() => {
+            context.commit('add');
+            context.state.num += options.num;
+            console.log(context.state.num ); // 1s 后值为11
+          }, 1000);
+        }
+      }
+    });
+    // 写法1
+    // store.dispatch('add',{num : 10});
+    // 写法2
+    store.dispatch({
+      type : 'add', // 这里写actions中的方法名
+      num : 10,
+    });
+  </script>
+</body>
+
+</html>
